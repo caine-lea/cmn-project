@@ -35,7 +35,7 @@ public class ASGroupLoader implements LocalResourceLoader {
         String securityGroupId = node.requiredString("security-group");
         String subnetId = node.requiredString("subnet");
 
-        Map<?, ?> capacity = node.mapField("capacity");
+        Map<String, Object> capacity = node.mapField("capacity");
         int minSize = (int) Asserts.notNull(capacity.get("min"), "min is required for capacity");
         int maxSize = (int) Asserts.notNull(capacity.get("max"), "max is required for capacity");
         int desiredSize = (int) Asserts.notNull(capacity.get("desired"), "desired is required for capacity");

@@ -49,7 +49,7 @@ public class ELBLoader implements LocalResourceLoader {
                     elb.cert = resources.get(ServerCert.class, id);
                 }
             });
-            elb.subnet = resources.get(Subnet.class, subnetId);
+            elb.subnets = List.of(resources.get(Subnet.class, subnetId));
             elb.securityGroup = resources.get(SecurityGroup.class, securityGroupId);
             elb.targetGroup = resources.get(TargetGroup.class, targetGroupId);
         });

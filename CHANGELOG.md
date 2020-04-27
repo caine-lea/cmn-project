@@ -1,4 +1,51 @@
 ## Change log
+
+### 1.9.10 (11/29/2019 - 11/29/2019)
+* java: update to JDK13
+* aws: update to version 1.11.
+
+### 1.9.9.1 (7/23/2019 - 7/23/2019)
+* bug: fix subnets parameter typo
+
+### 1.9.9 (7/16/2019 - 7/17/2019)
+* bug: fix NPE on DeleteELBTask workflow
+
+### 1.9.8 (2/21/2019 - 4/26/2019)
+* aws: update to version 1.11.540
+* gradle: update to version 5.4
+* kafka: update role to version 2.2.0
+* es: update role to version 7.0.0
+* kibana: update role to version 7.0.0
+* log-processor: update role to version 6.12.4
+
+### 1.9.7 (10/10/2018 - 10/12/2018) ¡Requires JDK11!
+* log-processor: update role to version 6.6.4
+* kibana: update role to version 6.3.2
+* es: update role to version 6.3.2
+* aws: update to version 1.11.427
+* jdk: update to JDK11
+
+### 1.9.6 (9/6/2018 - 9/6/2018)
+* node: fix node repo ansible role
+* aws: update to version 1.11.402
+
+### 1.9.5 (9/3/2018 - 9/3/2018)
+* node: update to version 10.9.0
+* aws: update to version 1.11.401
+* gradle: update to version 4.10
+
+### 1.9.4 (6/26/2018 - 8/14/2018)
+* app: add app-legacy role using jdk8 - temporary role -
+* aws: update to version 1.11.374
+* kafka: fix download URL
+* ansible: fix install command
+
+### 1.9.3 (6/25/2018 - 6/26/2018)
+* kafka: update to version 1.1.0
+* kibana: update to version 6.3.0
+* es: update to version 6.3.0
+* app: add temporary workaround to fix jdk10 / ubuntu18 trustAnchors issue
+
 ### 1.9.2 (5/18/2018 - 6/24/2018)
 * ansible: update app role to ubuntu 18
 * jdk: upgrade to jdk10

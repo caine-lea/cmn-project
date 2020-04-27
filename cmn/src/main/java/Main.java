@@ -7,11 +7,14 @@ import core.aws.util.ClasspathResources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
 /**
  * @author neo
  */
 public final class Main {
-    public static void main(String[] args) throws Throwable {
+    public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
         Main main = new Main(args);
         main.execute();
     }
@@ -23,7 +26,7 @@ public final class Main {
         this.args = args;
     }
 
-    private void execute() throws Throwable {
+    private void execute() throws InterruptedException, ExecutionException, IOException {
         if (args == null || args.length < 1) {
             printHelp();
             return;
@@ -38,8 +41,8 @@ public final class Main {
     }
 
     private void parseParams(Context context) {
-        for (int i = 1,
-             length = args.length; i < length; i++) {
+        var length = args.length;
+        for (int i = 1; i < length; i++) {
             String arg = args[i];
             Asserts.isTrue(arg.startsWith("--") && arg.contains("="), "arg must be in --{name}={value} format, arg={}", arg);
             int index = arg.indexOf('=');

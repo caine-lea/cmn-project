@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -24,10 +25,13 @@ public class Context {
     public Environment env;
 
     public void output(String key, Object value) {
-        lock.lock();
         try {
-            newOutputs.computeIfAbsent(key, k -> new ArrayList<>())
-                      .add(String.valueOf(value));
+            if (lock.tryLock(5, TimeUnit.MILLISECONDS)) {
+                newOutputs.computeIfAbsent(key, k -> new ArrayList<>())
+                    .add(String.valueOf(value));
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException("could not acquire thread lock", e);
         } finally {
             lock.unlock();
         }
@@ -53,14 +57,17 @@ public class Context {
     }
 
     void printOutputs() {
-        lock.lock();
         try {
-            if (newOutputs.isEmpty()) {
-                messageLogger.info("\nno outputs\n");
-                return;
+            if (lock.tryLock(5, TimeUnit.MILLISECONDS)) {
+                if (newOutputs.isEmpty()) {
+                    messageLogger.info("\nno outputs\n");
+                    return;
+                }
+                messageLogger.info("\noutputs:\n");
+                newOutputs.forEach((key, values) -> values.forEach(value -> messageLogger.info("{} => {}\n", key, value)));
             }
-            messageLogger.info("\noutputs:\n");
-            newOutputs.forEach((key, values) -> values.forEach(value -> messageLogger.info("{} => {}\n", key, value)));
+        } catch (InterruptedException e) {
+            throw new RuntimeException("could not acquire thread lock", e);
         } finally {
             lock.unlock();
         }

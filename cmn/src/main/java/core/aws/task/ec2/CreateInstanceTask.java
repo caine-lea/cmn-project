@@ -42,9 +42,9 @@ public class CreateInstanceTask extends Task<Instance> {
         Map<String, Integer> addedInstanceCount = planAddedCountBySubnet();
 
         for (Map.Entry<String, Integer> entry : addedInstanceCount.entrySet()) {
-            String subnetId = entry.getKey();
             int count = entry.getValue();
             if (count > 0) {
+                String subnetId = entry.getKey();
                 createInstance(context, count, subnetId);
             }
         }
@@ -99,7 +99,7 @@ public class CreateInstanceTask extends Task<Instance> {
             .withUserData(Base64.encodeBase64String(Strings.bytes(userData(context.env))));
 
         if (EBS.enableEBSOptimized(resource.instanceType)) {
-            request.withEbsOptimized(true);
+            request.withEbsOptimized(Boolean.TRUE);
         }
 
         if (resource.instanceProfile != null)
